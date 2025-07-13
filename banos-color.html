@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Baños de Color Fantasía</title>
+  <!-- SEO: Meta descripción -->
+  <meta name="description" content="Tienda de tinturas y baños de color fantasía para el cabello. Colores vibrantes y matizantes.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: Arial, sans-serif; 
+      color: #333; 
+      background: #181818; /* Negro mate */
+    }
+    .navbar { background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
+    .navbar ul { list-style: none; display: flex; gap: 20px; align-items: center; }
+    .navbar ul li { position: relative; }
+    .navbar a { text-decoration: none; color: #6a1b9a; font-weight: bold; padding: 8px 12px; display: block; }
+    .navbar a:hover { background: #f0e6f6; border-radius: 5px; }
+    .submenu-items { display: none; position: absolute; background: white; top: 100%; left: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.15); padding: 10px 0; z-index: 10; min-width: 180px; }
+    .submenu:hover .submenu-items { display: block; }
+    .submenu-items li { padding: 5px 20px; }
+    .submenu-items a { color: #444; font-weight: normal; }
+    .site-header { background: #6a1b9a; color: white; padding: 40px 20px; text-align: center; }
+    .site-header h1 { font-size: 2.5rem; }
+    .productos { padding: 40px 20px; text-align: center; }
+    .productos h2 { margin-bottom: 20px; font-size: 2rem; }
+    .grid-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 18px; }
+    .producto-card { background: white; border-radius: 8px; padding: 15px; }
+    .producto-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
+    .producto-card h3 { margin: 10px 0 5px; font-size: 1.1rem; }
+    .precio { 
+      font-size: 1rem; 
+      color: #b39ddb; /* Lila opaco igual que en index.html */
+      margin-bottom: 8px; 
+    }
+    .producto-card button { background: #6a1b9a; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; }
+    .site-footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+    /* Estilos para el carrito flotante */
+    .carrito { display: none; position: fixed; top: 80px; right: 20px; width: 320px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border-radius: 8px; padding: 20px; z-index: 200; }
+    .carrito h2 { font-size: 1.5rem; margin-bottom: 15px; }
+    .carrito ul { list-style: none; padding: 0; margin-bottom: 15px; }
+    .carrito ul li { margin-bottom: 10px; }
+    .carrito p { font-weight: bold; margin-bottom: 15px; }
+    .carrito button { background: #6a1b9a; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html#inicio">Inicio</a></li>
+      <li class="submenu">
+        <a href="#gama">Gama de Colores ▾</a>
+        <ul class="submenu-items">
+          <li><a href="banos-color.html">Baños de Color</a></li>
+          <li><a href="index.html#shampoo">Shampoo Matizante</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#carrito">Carrito de Compra</a></li>
+      <li><a href="index.html#cuenta">Mi Cuenta</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+  <!-- Barra pequeña debajo del menú -->
+  <div style="height:8px; background:#6a1b9a; width:100%;"></div>
+
+  <!-- Elimina el header anterior y el cuadro de color -->
+  <section class="productos">
+    <h2>Colores Disponibles</h2>
+    <div class="grid-productos">
+      <!-- Productos generados por JS -->
+    </div>
+  </section>
+  <!-- CARRITO DE COMPRA -->
+  <section id="carrito" class="carrito" style="display:none; position:fixed; top:80px; right:20px; width:320px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:200;">
+    <h2>Carrito de Compra</h2>
+    <ul id="carrito-lista" style="list-style:none; padding:0; margin-bottom:15px;"></ul>
+    <p id="carrito-total" style="font-weight:bold; margin-bottom:15px;">Total: $0</p>
+    <button onclick="vaciarCarrito()" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Vaciar carrito</button>
+    <button onclick="document.getElementById('carrito').style.display='none'" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; float:right;">Cerrar</button>
+  </section>
+  <footer class="site-footer">
+    <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:center; max-width:900px; margin:auto; text-align:left;">
+      <!-- Iconos de redes sociales -->
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:90px;">
+        <p style="margin-bottom:10px; color:#fff;">Síguenos</p>
+        <div style="display:flex; gap:10px;">
+          <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+            <img src="icon-facebook.png" alt="Facebook" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+            <img src="icon-instagram.png" alt="Instagram" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+          <a href="https://wa.me/" target="_blank" title="WhatsApp">
+            <img src="icon-whatsapp.png" alt="WhatsApp" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Rockin Colors</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="index.html#inicio" style="color:#fff; text-decoration:none;">Acerca de Rockin Colors</a></li>
+          <li><a href="banos-color.html" style="color:#fff; text-decoration:none;">Baños de Color</a></li>
+          <li><a href="index.html#shampoo" style="color:#fff; text-decoration:none;">Shampoo Matizante</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Servicio al Cliente</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#fff; text-decoration:none;">Seguimiento de Pedido</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Preguntas Frecuentes</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Mi Cuenta</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#fff; text-decoration:none;">Mi Cuenta</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Historial de Pedidos</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:30px; color:#bbb;">&copy; 2025 Rockin Colors</p>
+  </footer>
+  <script>
+    const colores = [
+      "Ultravioleta", "Morado", "Turquesa", "Verde Limon", "Rojo", "Rojo Intenso", "Rojo Oscuro", "Cereza", "Verde", "Verde Oscuro", "Naranjo", "Ginger", "Menta", "Borgoña", "Purple Dark", "Azul", "Hot Pink", "Amarillo", "Celeste", "Jade", "Fucsia", "Rosa Pastel", "Lilafucsia", "Negro", "Lilapastel", "Rosegold", "Rosado", "Amatista", "Calipso"
+    ];
+    const grid = document.querySelector('.grid-productos');
+    colores.forEach(color => {
+      const card = document.createElement('div');
+      card.className = 'producto-card';
+      // Corrección para casos especiales
+      let imgFile = color.toLowerCase().replace(/ /g,'-') + '.png';
+      if (color.toLowerCase() === 'turquesa') imgFile = 'turquesa.png';
+      if (color.toLowerCase() === 'ultravioleta') imgFile = 'ultravioleta.png';
+      if (color.toLowerCase() === 'verde limon') imgFile = 'verdelimon.png';
+      if (color.toLowerCase() === 'rojo') imgFile = 'rojo.png';
+      if (color.toLowerCase() === 'rojo intenso') imgFile = 'rojointenso.png';
+      if (color.toLowerCase() === 'rojo oscuro') imgFile = 'rojooscuro.png';
+      if (color.toLowerCase() === 'cereza') imgFile = 'cereza.png';
+      if (color.toLowerCase() === 'verde') imgFile = 'verde.png';
+      if (color.toLowerCase() === 'verde oscuro') imgFile = 'verde-oscuro.png';
+      if (color.toLowerCase() === 'naranjo') imgFile = 'naranjo.png';
+      if (color.toLowerCase() === 'ginger') imgFile = 'ginger.png';
+      if (color.toLowerCase() === 'menta') imgFile = 'menta.png';
+     
+      card.innerHTML = `
+  <img src="${imgFile.replace('.png','-pote.png')}" alt="${color} pote" loading="lazy">
+  <h3>${color}</h3>
+  <p class="precio">$5.500</p>
+  <button>Agregar al carrito</button>
+`;
+
+
+      card.querySelector('button').onclick = function() {
+        agregarAlCarrito(color, 5500);
+      };
+      grid.appendChild(card);
+    });
+    // Carrito simple usando localStorage
+    function agregarAlCarrito(nombre, precio) {
+      let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+      const producto = carrito.find(p => p.nombre === nombre);
+      if (producto) {
+        producto.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      mostrarMensaje(`${nombre} añadido al carrito`);
+    }
+
+    function mostrarMensaje(mensaje) {
+      const alerta = document.createElement('div');
+      alerta.textContent = mensaje;
+      alerta.style.position = 'fixed';
+      alerta.style.bottom = '20px';
+      alerta.style.left = '50%';
+      alerta.style.transform = 'translateX(-50%)';
+      alerta.style.background = '#6a1b9a';
+      alerta.style.color = 'white';
+      alerta.style.padding = '10px 20px';
+      alerta.style.borderRadius = '8px';
+      alerta.style.zIndex = '500';
+      alerta.style.fontWeight = 'bold';
+      alerta.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+      document.body.appendChild(alerta);
+      setTimeout(() => alerta.remove(), 2500);
+    }
+    // Carrito flotante igual que en index.html
+    function mostrarCarrito() {
+      document.getElementById('carrito').style.display = 'block';
+      renderizarCarrito();
+    }
+    function vaciarCarrito() {
+      localStorage.setItem('carrito', '[]');
+      renderizarCarrito();
+    }
+    function renderizarCarrito() {
+      let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+      const lista = document.getElementById('carrito-lista');
+      lista.innerHTML = '';
+      let total = 0;
+      carrito.forEach(item => {
+        total += item.precio * item.cantidad;
+        const li = document.createElement('li');
+        li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString()}`;
+        lista.appendChild(li);
+      });
+      document.getElementById('carrito-total').textContent = 'Total: $' + total.toLocaleString();
+    }
+    // Evento para mostrar el carrito al hacer clic en el menú
+    document.querySelectorAll('a[href="index.html#carrito"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        mostrarCarrito();
+      });
+    });
+    document.querySelectorAll('.submenu > a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const submenu = link.nextElementSibling;
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+    // Renderizar carrito al cargar
+    renderizarCarrito();
+  </script>
+</body>
+</html>

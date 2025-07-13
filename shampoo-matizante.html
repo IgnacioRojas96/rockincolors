@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Shampoo Matizante - Rockin Colors</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: #181818;
+    }
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .navbar ul li { position: relative; }
+    .navbar a {
+      text-decoration: none;
+      color: #6a1b9a;
+      font-weight: bold;
+      padding: 8px 12px;
+      display: block;
+    }
+    .navbar a:hover {
+      background: #f0e6f6;
+      border-radius: 5px;
+    }
+    .submenu-items {
+      display: none;
+      position: absolute;
+      background: white;
+      top: 100%;
+      left: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      padding: 10px 0;
+      z-index: 10;
+      min-width: 180px;
+    }
+    .submenu:hover .submenu-items {
+      display: block;
+    }
+    .submenu-items li { padding: 5px 20px; }
+    .submenu-items a { color: #444; font-weight: normal; }
+    .site-header {
+      background: #4a136b;
+      color: white;
+      padding: 20px 20px;
+      text-align: center;
+    }
+    .site-header p {
+      font-size: 1.5rem;
+      font-style: italic;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .productos {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .productos h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #a89bb6;
+    }
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
+    }
+    .producto-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .producto-card img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .producto-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.1rem;
+      color: #6a1b9a;
+    }
+    .precio {
+      font-size: 1.1rem;
+      color: #b39ddb;
+      margin-bottom: 10px;
+    }
+    .producto-card button {
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .site-footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html#inicio">Inicio</a></li>
+      <li class="submenu">
+        <a href="#">Gama de Colores ▾</a>
+        <ul class="submenu-items">
+          <li><a href="banos-color.html">Baños de Color</a></li>
+          <li><a href="shampoo-matizante.html">Shampoo Matizante</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#carrito">Carrito de Compra</a></li>
+      <li><a href="index.html#cuenta">Mi Cuenta</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <p>Shampoo Matizante para tonos perfectos</p>
+  </header>
+
+  <!-- PRODUCTOS SHAMPOO MATIZANTE -->
+  <section class="productos">
+    <h2>Shampoo Matizante</h2>
+    <div class="grid-productos">
+      <div class="producto-card">
+        <img src="shampoo.png" alt="Shampoo matizante clásico" loading="lazy">
+        <h3>Matizante Clásico</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Neutraliza tonos amarillos y mantiene el rubio frío</p>
+        <button onclick="agregarAlCarrito('Matizante Clásico', 5500)">Agregar al carrito</button>
+      </div>
+      <div class="producto-card">
+        <img src="shampoo-lila.png" alt="Shampoo matizante lila" loading="lazy">
+        <h3>Matizante Lila</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Ideal para matizar tonos lilas y violetas</p>
+        <button onclick="agregarAlCarrito('Matizante Lila', 5500)">Agregar al carrito</button>
+      </div>
+      <div class="producto-card">
+        <img src="shampoo-plata.png" alt="Shampoo matizante plata" loading="lazy">
+        <h3>Matizante Plata</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Realza y mantiene tonos grises y platinados</p>
+        <button onclick="agregarAlCarrito('Matizante Plata', 5500)">Agregar al carrito</button>
+      </div>
+    </div>
+    <p style="color:#a89bb6; margin-top:20px;">Ideales para mantener tonos fríos como grises, lilas o platinados.</p>
+  </section>
+
+  <script>
+    // Carrito simple usando localStorage
+    function agregarAlCarrito(nombre, precio) {
+      let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+      const producto = carrito.find(p => p.nombre === nombre);
+      if (producto) {
+        producto.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      mostrarMensaje(`${nombre} añadido al carrito`);
+    }
+
+    function mostrarMensaje(mensaje) {
+      const alerta = document.createElement('div');
+      alerta.textContent = mensaje;
+      alerta.style.position = 'fixed';
+      alerta.style.bottom = '20px';
+      alerta.style.left = '50%';
+      alerta.style.transform = 'translateX(-50%)';
+      alerta.style.background = '#6a1b9a';
+      alerta.style.color = 'white';
+      alerta.style.padding = '10px 20px';
+      alerta.style.borderRadius = '8px';
+      alerta.style.zIndex = '500';
+      alerta.style.fontWeight = 'bold';
+      alerta.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+      document.body.appendChild(alerta);
+      setTimeout(() => alerta.remove(), 2500);
+    }
+  </script>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:center; max-width:900px; margin:auto; text-align:left;">
+      <!-- Iconos de redes sociales -->
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:90px;">
+        <p style="margin-bottom:10px; color:#fff;">Síguenos</p>
+        <div style="display:flex; gap:10px;">
+          <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+            <img src="icon-facebook.png" alt="Facebook" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+            <img src="icon-instagram.png" alt="Instagram" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+          <a href="https://wa.me/" target="_blank" title="WhatsApp">
+            <img src="icon-whatsapp.png" alt="WhatsApp" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Rockin Colors</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="index.html#inicio" style="color:#fff; text-decoration:none;">Acerca de Rockin Colors</a></li>
+          <li><a href="banos-color.html" style="color:#fff; text-decoration:none;">Baños de Color</a></li>
+          <li><a href="shampoo-matizante.html" style="color:#fff; text-decoration:none;">Shampoo Matizante</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Servicio al Cliente</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#fff; text-decoration:none;">Seguimiento de Pedido</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Preguntas Frecuentes</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:10px;">Mi Cuenta</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="#" style="color:#fff; text-decoration:none;">Mi Cuenta</a></li>
+          <li><a href="#" style="color:#fff; text-decoration:none;">Historial de Pedidos</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:30px; color:#bbb;">&copy; 2025 Rockin Colors</p>
+  </footer>
+</body>
+</html>

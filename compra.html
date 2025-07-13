@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle de Compra</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+    .container { max-width: 500px; margin: 40px auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h2 { color: #6a1b9a; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 10px; }
+    .total { font-weight: bold; margin-top: 20px; }
+    .btn { background: #e91e63; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; margin-top: 20px; display: block; width: 100%; text-align: center; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Detalle de tu compra</h2>
+    <ul id="detalle-lista"></ul>
+    <p class="total" id="detalle-total">Total: $0</p>
+    <a href="pago.html" class="btn">Proceder al pago</a>
+  </div>
+  <script>
+    // Mostrar detalle desde localStorage
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const lista = document.getElementById('detalle-lista');
+    let total = 0;
+    carrito.forEach(item => {
+      total += item.precio * item.cantidad;
+      const li = document.createElement('li');
+      li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString()}`;
+      lista.appendChild(li);
+    });
+    document.getElementById('detalle-total').textContent = 'Total: $' + total.toLocaleString();
+  </script>
+</body>
+</html>

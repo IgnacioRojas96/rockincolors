@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Baños de Color Fantasía</title>
+  <!-- SEO: Meta descripción -->
+  <meta name="description" content="Tienda de tinturas y baños de color fantasía para el cabello. Colores vibrantes y matizantes.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #eee; /* Mejor contraste sobre fondo oscuro */
+      background: #181818; /* Negro oscuro opaco */
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .navbar ul li {
+      position: relative;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #6a1b9a;
+      font-weight: bold;
+      padding: 8px 12px;
+      display: block;
+    }
+
+    .navbar a:hover {
+      background: #f0e6f6;
+      border-radius: 5px;
+    }
+
+    .submenu-items {
+      display: none;
+      position: absolute;
+      background: white;
+      top: 100%;
+      left: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      padding: 10px 0;
+      z-index: 10;
+      min-width: 180px;
+    }
+
+    .submenu:hover .submenu-items {
+      display: block;
+    }
+
+    .submenu-items li {
+      padding: 5px 20px;
+    }
+
+    .submenu-items a {
+      color: #444;
+      font-weight: normal;
+    }
+
+    /* --- HEADER --- */
+    .site-header {
+      background: #4a136b; /* Más oscuro que #6a1b9a */
+      color: white;
+      padding: 20px 20px; /* Menos espacio vertical */
+      text-align: center;
+    }
+
+    .site-header h1 {
+      font-size: 2.5rem;
+      display: none; /* Oculta el título principal */
+    }
+
+    .site-header p {
+      font-size: 1.5rem; /* Más pequeño que antes */
+      font-style: italic;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      position: relative;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .hero img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
+    .btn-hero {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #e91e63;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      border-radius: 4px;
+    }
+
+    /* --- PRODUCTOS --- */
+    .productos {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .productos h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #e0cfff; /* Lila más claro para mejor contraste */
+    }
+
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
+    }
+
+    .producto-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s ease; /* Para animación suave en hover */
+    }
+
+    .producto-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .producto-card img {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .producto-card h3 {
+      margin: 15px 0 5px;
+      /* Colores llamativos y contrastantes para cada producto */
+    }
+    .producto-card:nth-child(1) h3 {
+      color: #ff1744; /* Rojo Fuego: rojo intenso */
+    }
+    .producto-card:nth-child(2) h3 {
+      color: #2979ff; /* Azul Eléctrico: azul brillante */
+    }
+    .producto-card:nth-child(3) h3 {
+      color: #c51162; /* Lila Fucsia: fucsia fuerte y visible */
+    }
+
+    .precio {
+      font-size: 1.1rem;
+      color: #e0cfff; /* Lila más claro para mejor contraste */
+      margin-bottom: 10px;
+    }
+
+    .producto-card button {
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    /* --- CARRITO --- */
+    .carrito,
+    #cuenta,
+    #detalle-compra,
+    #seccion-pago,
+    #seccion-entrega,
+    #crear-cuenta,
+    #modal-pedidos {
+      color: #111 !important; /* Letras negras para mejor contraste en modales y carrito */
+      background: #fff;
+    }
+
+    .carrito {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 320px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 20px;
+      z-index: 200;
+    }
+
+    .carrito h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .carrito ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 15px;
+    }
+
+    .carrito p {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .carrito button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    /* --- FOOTER --- */
+    .site-footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* Transiciones suaves para botones y enlaces */
+    .navbar a,
+    .btn-hero,
+    button {
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Botón flotante */
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #5e3a84;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .chat-toggle-btn:hover {
+      background-color: #7042a8;
+    }
+
+    /* Contenedor del chatbot */
+    .chatbot-container {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      z-index: 9999;
+      font-size: 15px;
+      color: #5f5f5f;
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .chatbot-container.open {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chatbot-header {
+      background: #5e3a84;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-header img {
+      width: 36px;
+      height: 36px;
+    }
+
+    .chatbot-body {
+      padding: 16px;
+      background-color: #fafafa;
+    }
+
+    .chatbot-body p {
+      margin: 0 0 10px;
+    }
+
+    .bot-question {
+      font-weight: bold;
+      font-size: 16px;
+      color: #5e3a84;
+      margin-bottom: 10px;
+    }
+
+    .chatbot-body .prompt {
+      color: black;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .chatbot-options {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .chatbot-options li {
+      margin-bottom: 10px;
+      background: #eee;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: black;
+      transition: background 0.3s;
+    }
+
+    .chatbot-options li:hover {
+      background: #ddd;
+    }
+
+    .chatbot-footer {
+      text-align: center;
+      padding: 10px;
+      background: #f4f4f4;
+      font-size: 13px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .whatsapp-button {
+      background: #25D366;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li class="submenu" style="position:relative;">
+        <a href="#">Gama de Colores ▾</a>
+        <ul class="submenu-items">
+          <li><a href="banos-color.html">Baños de Color</a></li>
+          <li><a href="shampoo-matizante.html">Shampoo Matizante</a></li>
+        </ul>
+      </li>
+      <li><a href="#carrito">Carrito de Compra</a></li>
+      <li><a href="#cuenta">Mi Cuenta</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="site-header" id="inicio">
+    <!-- <h1>Baños de Color Fantasía</h1>  Eliminado -->
+    <p>Colores vibrantes para tu cabello</p>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="hero-color.png" alt="Cabello con color fantasía">
+    <a href="#banos" class="btn-hero">Ver productos</a>
+  </section>
+
+  <!-- BAÑOS DE COLOR -->
+  <section id="banos" class="productos">
+    <h2>Baños de Color</h2>
+    <div class="grid-productos">
+      <div class="producto-card">
+        <img src="tinte-rojo.png" alt="Tinte rojo fantasía" loading="lazy">
+        <h3>Rojo Fuego</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Color intenso de larga duración</p>
+        <button>Añadir al carrito</button>
+      </div>
+      <div class="producto-card">
+        <img src="tinte-azul.png" alt="Tinte azul fantasía" loading="lazy">
+        <h3>Azul Eléctrico</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Color vibrante y llamativo</p>
+        <button>Añadir al carrito</button>
+      </div>
+      <div class="producto-card">
+        <img src="tinte-lilafucsia.png" alt="Tinte lila fucsia fantasía" loading="lazy">
+        <h3 style="color:#c51162;">Lila Fucsia</h3>
+        <p class="precio">$5.500</p>
+        <p class="descripcion" style="color:#111;">Fucsia intenso para un look atrevido</p>
+        <button>Añadir al carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHAMPOO -->
+  <section id="shampoo" class="productos">
+    <h2>Shampoo Matizante</h2>
+    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 20px;">
+      <div>
+        <img src="shampoo.png" alt="Shampoo matizante" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" loading="lazy">
+        <p style="color:#a89bb6; font-size:0.95rem;">Matizante clásico</p>
+      </div>
+      <div>
+        <img src="shampoo-lila.png" alt="Shampoo matizante lila" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" loading="lazy">
+        <p style="color:#a89bb6; font-size:0.95rem;">Matizante lila</p>
+      </div>
+      <div>
+        <img src="shampoo-plata.png" alt="Shampoo matizante plata" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" loading="lazy">
+        <p style="color:#a89bb6; font-size:0.95rem;">Matizante plata</p>
+      </div>
+    </div>
+    <p style="color:#a89bb6;">Ideal para mantener tonos fríos como grises, lilas o platinados.</p>
+  </section>
+
+  <!-- CARRITO DE COMPRA -->
+  <section id="carrito" class="carrito" style="display:none; position:fixed; top:80px; right:20px; width:320px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:200;">
+    <h2>Carrito de Compra</h2>
+    <ul id="carrito-lista" style="list-style:none; padding:0; margin-bottom:15px;"></ul>
+    <p id="carrito-total" style="font-weight:bold; margin-bottom:15px;">Total: $0</p>
+    <button onclick="vaciarCarrito()" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Vaciar carrito</button>
+    <button onclick="document.getElementById('carrito').style.display='none'" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; float:right;">Cerrar</button>
+    <button id="detalle-compra-btn" style="background:#009688; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; display:block; margin-top:15px; text-align:center;">Ver detalle y comprar</button>
+  </section>
+
+  <!-- DETALLE DE COMPRA -->
+  <section id="detalle-compra" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:201;">
+    <h2>Detalle de tu compra</h2>
+    <ul id="detalle-lista" style="list-style:none; padding:0;"></ul>
+    <p class="total" id="detalle-total" style="font-weight:bold; margin-top:15px;">Total: $0</p>
+    <button id="btn-pago" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:15px;">Proceder al pago</button>
+    <button onclick="cerrarDetalleCompra()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Cerrar</button>
+  </section>
+
+  <!-- SECCION PAGO -->
+  <section id="seccion-pago" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:202;">
+    <h2>Método de Pago</h2>
+    <div style="margin:20px 0;">
+      <strong>Transferencia Bancaria</strong>
+      <p>Banco: Ejemplo<br>Cuenta: 123456789<br>Nombre: Tu Empresa<br>RUT: 12.345.678-9<br>Email: ventas@tuempresa.cl</p>
+    </div>
+    <button id="btn-entrega" style="background:#009688; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%;">Datos de entrega</button>
+    <button onclick="cerrarPago()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Cerrar</button>
+  </section>
+
+  <!-- SECCION ENTREGA -->
+  <section id="seccion-entrega" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:203;">
+    <h2>Datos de Entrega</h2>
+    <form id="form-entrega">
+      <label>Nombre Completo
+        <input type="text" name="nombre" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Dirección
+        <textarea name="direccion" required style="width:100%; margin-bottom:10px;"></textarea>
+      </label>
+      <label>Ciudad
+        <input type="text" name="ciudad" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Teléfono
+        <input type="tel" name="telefono" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <button class="btn" type="submit" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Finalizar compra</button>
+    </form>
+    <button onclick="cerrarEntrega()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Cerrar</button>
+  </section>
+
+  <!-- SECCION MI CUENTA -->
+  <section id="cuenta" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:204;">
+    <h2>Mi Cuenta</h2>
+    <form id="form-cuenta">
+      <label>Correo electrónico
+        <input type="email" name="email" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Contraseña
+        <input type="password" name="password" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <button type="submit" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%;">Ingresar</button>
+    </form>
+    <button onclick="cerrarCuenta()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Cerrar</button>
+    <p style="margin-top:15px; text-align:center;">
+      ¿No tienes cuenta? 
+      <a href="#" id="crear-cuenta-link" style="color:#6a1b9a; text-decoration:underline; cursor:pointer;">Crear cuenta</a>
+    </p>
+  </section>
+
+  <!-- SECCION CREAR CUENTA -->
+  <section id="crear-cuenta" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:205;">
+    <h2>Crear Cuenta</h2>
+    <form id="form-crear-cuenta">
+      <label>Nombre
+        <input type="text" name="nombre" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Correo electrónico
+        <input type="email" name="email" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Número de teléfono
+        <input type="tel" name="telefono" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Contraseña
+        <input type="password" name="password" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <label>Validar contraseña
+        <input type="password" name="password2" required style="width:100%; margin-bottom:10px;">
+      </label>
+      <button type="submit" style="background:#e91e63; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%;">Registrar</button>
+    </form>
+    <button onclick="cerrarCrearCuenta()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px;">Cerrar</button>
+  </section>
+
+  <!-- USUARIO LOGUEADO (aparece arriba a la derecha) -->
+  <div id="usuario-logueado" style="display:none; position:fixed; top:20px; right:30px; z-index:300; align-items:center; gap:10px;">
+    <img src="usuario.png" alt="Usuario" style="width:36px; height:36px; border-radius:50%; border:2px solid #6a1b9a; vertical-align:middle;">
+    <span id="nombre-usuario" style="color:#fff; font-weight:bold; vertical-align:middle;"></span>
+    <button onclick="verPedidos()" style="background:#6a1b9a; color:white; border:none; padding:4px 10px; border-radius:4px; margin-left:10px; cursor:pointer;">Mis Pedidos</button>
+    <button onclick="cerrarSesion()" style="background:#e91e63; color:white; border:none; padding:4px 10px; border-radius:4px; margin-left:5px; cursor:pointer;">Salir</button>
+  </div>
+
+  <!-- MODAL DE PEDIDOS -->
+  <div id="modal-pedidos" style="display:none; position:fixed; top:80px; right:20px; width:350px; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:20px; z-index:205;">
+    <h2>Mis Pedidos</h2>
+    <ul id="lista-pedidos" style="list-style:none; padding:0; margin-bottom:15px;"></ul>
+    <button onclick="cerrarPedidos()" style="background:#6a1b9a; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; width:100%;">Cerrar</button>
+  </div>
+
+  <!-- Botón flotante del chatbot -->
+<button id="chatbot-btn" style="
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #c51162; /* Lila fucsia oscuro y brillante */
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+">
+  <img src="chatbot.png" alt="Chatbot" style="width:32px; height:32px;">
+</button>
+
+<!-- Ventana emergente del chatbot -->
+<div id="chatbot-window" style="
+  position: fixed;
+  bottom: 94px;
+  right: 24px;
+  width: 340px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+">
+  <div style="background:#c51162; color:#fff; padding:16px; display:flex; align-items:center; gap:10px;">
+    <img src="chatbot.png" alt="Bot" style="width:36px; height:36px;">
+    <div>
+      <strong>RockinBot</strong><br>
+      <span style="font-size:13px;">¡Bienvenido! 😊</span>
+    </div>
+    <button id="chatbot-close" style="margin-left:auto; background:none; border:none; color:#fff; font-size:22px; cursor:pointer;">&times;</button>
+  </div>
+  <div id="chatbot-body" style="padding:16px; background:#fff; min-height:180px;">
+    <div style="margin-bottom:12px; color:#c51162; font-weight:bold;">¿En qué puedo ayudarte?</div>
+    <ul id="chatbot-options" style="list-style:none; padding:0; margin:0;">
+      <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Quiero comprar un producto')">Quiero comprar un producto</li>
+      <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Formas de pago')">¿Qué formas de pago aceptan?</li>
+      <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Demora del envío')">¿Cuánto demora el envío?</li>
+      <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Devoluciones y cambios')">¿Puedo cambiar o devolver un producto?</li>
+      <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Pedidos anteriores')">¿Dónde veo mis pedidos anteriores?</li>
+    </ul>
+  </div>
+  <div style="padding:12px; background:#fff; text-align:center;">
+    <a href="https://wa.me/56912345678" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:#25D366; color:#fff; padding:8px 16px; border-radius:10px; text-decoration:none; font-weight:bold;">
+      <img src="icon-whatsapp.png" alt="WhatsApp" style="width:22px; height:22px;"> WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+  // Mostrar/ocultar chatbot
+  const chatbotBtn = document.getElementById('chatbot-btn');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotClose = document.getElementById('chatbot-close');
+  const chatbotBody = document.getElementById('chatbot-body');
+
+  chatbotBtn.onclick = () => {
+    chatbotWindow.style.display = 'flex';
+  };
+  chatbotClose.onclick = () => {
+    chatbotWindow.style.display = 'none';
+    resetChatbot();
+  };
+  // Cerrar al hacer clic fuera
+  window.addEventListener('click', function(e) {
+    if (!chatbotWindow.contains(e.target) && !chatbotBtn.contains(e.target)) {
+      chatbotWindow.style.display = 'none';
+      resetChatbot();
+    }
+  });
+
+  // Simulación de respuestas tipo chat
+  function chatbotReply(option) {
+    let response = '';
+    if (option === 'Quiero comprar un producto') {
+      response = '¡Genial! Puedes navegar por nuestra tienda y añadir productos al carrito. ¿Necesitas ayuda con algo más?';
+    } else if (option === 'Formas de pago') {
+      response = 'Aceptamos transferencia bancaria y pagos digitales. ¿Te gustaría saber más detalles?';
+    } else if (option === 'Demora del envío') {
+      response = 'El envío demora entre 2 y 5 días hábiles según tu ubicación. ¿Te gustaría consultar el estado de tu pedido?';
+    } else if (option === 'Devoluciones y cambios') {
+      response = 'Puedes solicitar cambios o devoluciones dentro de 10 días. ¿Necesitas iniciar un proceso?';
+    } else if (option === 'Pedidos anteriores') {
+      response = 'Puedes ver tus pedidos en la sección "Mi Cuenta". ¿Te ayudo a ingresar?';
+    }
+    chatbotBody.innerHTML += `
+      <div style="margin:10px 0; text-align:right;">
+        <span style="background:#c51162; color:#fff; padding:8px 14px; border-radius:14px; display:inline-block;">${option}</span>
+      </div>
+      <div style="margin:10px 0; text-align:left;">
+        <span style="background:#f2f2f2; color:#222; padding:8px 14px; border-radius:14px; display:inline-block;">${response}</span>
+      </div>
+    `;
+  }
+
+  // Reinicia el chat al cerrar
+  function resetChatbot() {
+    chatbotBody.innerHTML = `
+  <div style="margin-bottom:12px; color:#c51162; font-weight:bold;">¿En qué puedo ayudarte?</div>
+  <ul id="chatbot-options" style="list-style:none; padding:0; margin:0;">
+    <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Quiero comprar un producto')">Quiero comprar un producto</li>
+    <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Formas de pago')">¿Qué formas de pago aceptan?</li>
+    <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Demora del envío')">¿Cuánto demora el envío?</li>
+    <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Devoluciones y cambios')">¿Puedo cambiar o devolver un producto?</li>
+    <li style="margin-bottom:10px; background:#f2f2f2; color:#111; padding:10px; border-radius:10px; cursor:pointer;" onclick="chatbotReply('Pedidos anteriores')">¿Dónde veo mis pedidos anteriores?</li>
+  </ul>
+`;
+  }
+</script>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="contacto">
+  <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:center; max-width:900px; margin:auto; text-align:left;">
+    <!-- Iconos de redes sociales -->
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:90px;">
+      <p style="margin-bottom:10px; color:#fff;">Síguenos</p>
+      <div style="display:flex; gap:10px;">
+        <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+          <img src="icon-facebook.png" alt="Facebook" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+          <img src="icon-instagram.png" alt="Instagram" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+        </a>
+        <a href="https://wa.me/" target="_blank" title="WhatsApp">
+          <img src="icon-whatsapp.png" alt="WhatsApp" style="width:28px; height:28px; filter: brightness(0) invert(1);">
+        </a>
+      </div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:10px;">Rockin Colors</h3>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="#" style="color:#fff; text-decoration:none;">Acerca de Rockin Colors</a></li>
+        <li><a href="banos-color.html" style="color:#fff; text-decoration:none;">Baños de Color</a></li>
+        <li><a href="#shampoo" style="color:#fff; text-decoration:none;">Shampoo Matizante</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-bottom:10px;">Servicio al Cliente</h3>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="#" style="color:#fff; text-decoration:none;">Seguimiento de Pedido</a></li>
+        <li><a href="#" style="color:#fff; text-decoration:none;">Preguntas Frecuentes</a></li>
+        <li><a href="#" style="color:#fff; text-decoration:none;">Términos y Condiciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-bottom:10px;">Mi Cuenta</h3>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="#" style="color:#fff; text-decoration:none;">Mi Cuenta</a></li>
+        <li><a href="#" style="color:#fff; text-decoration:none;">Historial de Pedidos</a></li>
+      </ul>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:30px; color:#bbb;">&copy; 2025 Rockin Colors</p>
+
+</footer>
+</body>
+</html>
